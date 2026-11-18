@@ -1,0 +1,343 @@
+{
+  "meta": {
+    "version": "0.1.0",
+    "updatedAt": "2026-11-18",
+    "campus": "jukjeon",
+    "map": { "width": 3000, "height": 4500, "base": "/map/base.webp" },
+    "dummy": true
+  },
+  "buildings": [
+    {
+      "id": "hyedang",
+      "name": "혜당관",
+      "aliases": [],
+      "image": "/map/buildings/hyedang.png",
+      "labelPos": { "x": 1500, "y": 2130 },
+      "location": { "x": 1500, "y": 2300 },
+      "entrances": [
+        { "id": "hyedang-main", "label": "정문 (예시)", "floor": "1F", "stepFree": true, "location": { "x": 1500, "y": 2420 } }
+      ],
+      "floors": [
+        { "floor": "B1", "summary": "(예시) 자판기, 휴게 공간" },
+        { "floor": "1F", "summary": "(예시) 편의점, ATM" },
+        { "floor": "2F", "summary": "(예시) 라운지" }
+      ],
+      "lastVerified": "2026-11-18"
+    },
+    {
+      "id": "intl",
+      "name": "국제관",
+      "aliases": [],
+      "image": "/map/buildings/intl.png",
+      "labelPos": { "x": 2300, "y": 1030 },
+      "location": { "x": 2300, "y": 1200 },
+      "entrances": [],
+      "floors": [],
+      "lastVerified": null
+    },
+    {
+      "id": "lib",
+      "name": "퇴계기념도서관",
+      "aliases": ["도서관", "중도"],
+      "image": "/map/buildings/lib.png",
+      "labelPos": { "x": 1500, "y": 1530 },
+      "location": { "x": 1500, "y": 1700 },
+      "entrances": [
+        { "id": "lib-main", "label": "정문 (예시)", "floor": "1F", "stepFree": true, "location": { "x": 1500, "y": 1820 } }
+      ],
+      "floors": [
+        { "floor": "1F", "summary": "(예시) 안내데스크, 대출·반납, 복사실" },
+        { "floor": "2F", "summary": "(예시) 열람실" },
+        { "floor": "3F", "summary": "(예시) 그룹 스터디룸" }
+      ],
+      "lastVerified": "2026-11-18"
+    },
+    {
+      "id": "eng1",
+      "name": "제1공학관",
+      "aliases": ["1공"],
+      "image": "/map/buildings/eng1.png",
+      "labelPos": { "x": 700, "y": 930 },
+      "location": { "x": 700, "y": 1100 },
+      "entrances": [
+        { "id": "eng1-main", "label": "정문 (예시)", "floor": "1F", "stepFree": false, "location": { "x": 700, "y": 1220 } }
+      ],
+      "floors": [
+        { "floor": "1F", "summary": "(예시) 강의실" },
+        { "floor": "2F", "summary": "(예시) 강의실, 자판기, 라운지" }
+      ],
+      "lastVerified": "2026-11-18"
+    },
+    {
+      "id": "eng2",
+      "name": "제2공학관",
+      "aliases": ["2공"],
+      "image": "/map/buildings/eng2.png",
+      "labelPos": { "x": 700, "y": 1330 },
+      "location": { "x": 700, "y": 1500 },
+      "entrances": [],
+      "floors": [],
+      "lastVerified": null
+    },
+    {
+      "id": "eng3",
+      "name": "제3공학관",
+      "aliases": ["3공"],
+      "image": "/map/buildings/eng3.png",
+      "labelPos": { "x": 700, "y": 1730 },
+      "location": { "x": 700, "y": 1900 },
+      "entrances": [],
+      "floors": [],
+      "lastVerified": null
+    },
+    {
+      "id": "humanities",
+      "name": "인문관",
+      "aliases": [],
+      "image": "/map/buildings/humanities.png",
+      "labelPos": { "x": 2300, "y": 2030 },
+      "location": { "x": 2300, "y": 2200 },
+      "entrances": [],
+      "floors": [],
+      "lastVerified": null
+    },
+    {
+      "id": "business",
+      "name": "상경관",
+      "aliases": [],
+      "image": "/map/buildings/business.png",
+      "labelPos": { "x": 2300, "y": 2530 },
+      "location": { "x": 2300, "y": 2700 },
+      "entrances": [],
+      "floors": [],
+      "lastVerified": null
+    },
+    {
+      "id": "education",
+      "name": "사범관",
+      "aliases": [],
+      "image": "/map/buildings/education.png",
+      "labelPos": { "x": 2300, "y": 3030 },
+      "location": { "x": 2300, "y": 3200 },
+      "entrances": [],
+      "floors": [],
+      "lastVerified": null
+    },
+    {
+      "id": "swict",
+      "name": "소프트웨어ICT관",
+      "aliases": ["소프트웨어관"],
+      "image": "/map/buildings/swict.png",
+      "labelPos": { "x": 700, "y": 2530 },
+      "location": { "x": 700, "y": 2700 },
+      "entrances": [],
+      "floors": [],
+      "lastVerified": null
+    },
+    {
+      "id": "media",
+      "name": "미디어센터",
+      "aliases": ["미디어관"],
+      "image": "/map/buildings/media.png",
+      "labelPos": { "x": 700, "y": 3030 },
+      "location": { "x": 700, "y": 3200 },
+      "entrances": [],
+      "floors": [],
+      "lastVerified": null
+    }
+  ],
+  "places": [
+    {
+      "id": "lib-1f-wc",
+      "name": "1층 화장실",
+      "category": "restroom",
+      "subcategory": null,
+      "buildingId": "lib",
+      "floor": "1F",
+      "locationHint": "(예시) 안내데스크 왼쪽 복도 끝",
+      "hours": null,
+      "features": [],
+      "manners": [],
+      "accessibility": { "stepFree": true, "accessibleRestroom": true },
+      "photos": [],
+      "lastVerified": "2026-11-18",
+      "source": "field"
+    },
+    {
+      "id": "lib-1f-printer",
+      "name": "1층 복사·프린터실",
+      "category": "amenity",
+      "subcategory": "printer",
+      "buildingId": "lib",
+      "floor": "1F",
+      "locationHint": "(예시) 출입 게이트 지나 오른쪽",
+      "hours": "(예시) 평일 09:00-18:00",
+      "features": ["(예시) 흑백·컬러 출력", "(예시) 교통카드 결제"],
+      "manners": ["(예시) 출력물은 바로 수거"],
+      "accessibility": { "stepFree": true },
+      "photos": [],
+      "lastVerified": "2026-11-18",
+      "source": "field"
+    },
+    {
+      "id": "lib-1f-umbrella",
+      "name": "우산 대여",
+      "category": "amenity",
+      "subcategory": "umbrella",
+      "buildingId": "lib",
+      "floor": "1F",
+      "locationHint": "(예시) 안내데스크",
+      "hours": "(예시) 평일 09:00-18:00",
+      "features": ["(예시) 학생증 필요"],
+      "manners": ["(예시) 다음 날까지 반납"],
+      "accessibility": { "stepFree": true },
+      "photos": [],
+      "lastVerified": "2026-11-18",
+      "source": "field"
+    },
+    {
+      "id": "lib-2f-study",
+      "name": "2층 제1열람실",
+      "category": "study",
+      "subcategory": "reading_room",
+      "buildingId": "lib",
+      "floor": "2F",
+      "locationHint": "(예시) 엘리베이터에서 내려 오른쪽 끝",
+      "hours": "(예시) 평일 09:00-22:00",
+      "features": ["(예시) 콘센트 일부 좌석", "(예시) 좌석 예약 필요"],
+      "manners": ["(예시) 통화는 복도에서", "(예시) 음료 외 음식 반입 금지"],
+      "accessibility": { "stepFree": true, "elevator": true, "accessibleRestroomNearby": false },
+      "photos": [],
+      "lastVerified": "2026-11-18",
+      "source": "field"
+    },
+    {
+      "id": "lib-3f-studyroom",
+      "name": "3층 그룹 스터디룸",
+      "category": "study",
+      "subcategory": "study_room",
+      "buildingId": "lib",
+      "floor": "3F",
+      "locationHint": "(예시) 계단 올라와 왼쪽",
+      "hours": "(예시) 평일 09:00-21:00",
+      "features": ["(예시) 4~6인실", "(예시) 사전 예약 필요"],
+      "manners": ["(예시) 예약 시간 지키기"],
+      "accessibility": { "elevator": true },
+      "photos": [],
+      "lastVerified": "2026-11-18",
+      "source": "field"
+    },
+    {
+      "id": "hyedang-1f-wc",
+      "name": "1층 화장실",
+      "category": "restroom",
+      "subcategory": null,
+      "buildingId": "hyedang",
+      "floor": "1F",
+      "locationHint": "(예시) 편의점 맞은편",
+      "hours": null,
+      "features": [],
+      "manners": [],
+      "accessibility": { "stepFree": true, "accessibleRestroom": false },
+      "photos": [],
+      "lastVerified": "2026-11-18",
+      "source": "field"
+    },
+    {
+      "id": "hyedang-1f-cvs",
+      "name": "편의점",
+      "category": "amenity",
+      "subcategory": "convenience_store",
+      "buildingId": "hyedang",
+      "floor": "1F",
+      "locationHint": "(예시) 정문 들어와 바로 왼쪽",
+      "hours": "(예시) 평일 08:00-20:00",
+      "features": ["(예시) 우산 판매", "(예시) 카드 결제"],
+      "manners": [],
+      "accessibility": { "stepFree": true },
+      "photos": [],
+      "lastVerified": "2026-11-18",
+      "source": "field"
+    },
+    {
+      "id": "hyedang-1f-atm",
+      "name": "ATM",
+      "category": "amenity",
+      "subcategory": "atm",
+      "buildingId": "hyedang",
+      "floor": "1F",
+      "locationHint": "(예시) 편의점 옆",
+      "hours": "(예시) 07:00-23:00",
+      "features": [],
+      "manners": [],
+      "accessibility": { "stepFree": true },
+      "photos": [],
+      "lastVerified": "2026-11-18",
+      "source": "field"
+    },
+    {
+      "id": "hyedang-b1-vending",
+      "name": "지하 1층 자판기",
+      "category": "amenity",
+      "subcategory": "vending",
+      "buildingId": "hyedang",
+      "floor": "B1",
+      "locationHint": "(예시) 계단 내려와 정면",
+      "hours": null,
+      "features": ["(예시) 음료", "(예시) 카드 결제"],
+      "manners": [],
+      "accessibility": {},
+      "photos": [],
+      "lastVerified": "2026-11-18",
+      "source": "field"
+    },
+    {
+      "id": "hyedang-2f-lounge",
+      "name": "2층 라운지",
+      "category": "study",
+      "subcategory": "lounge",
+      "buildingId": "hyedang",
+      "floor": "2F",
+      "locationHint": "(예시) 계단 올라와 오른쪽",
+      "hours": "(예시) 평일 09:00-21:00",
+      "features": ["(예시) 콘센트 있음", "(예시) 대화 가능"],
+      "manners": ["(예시) 자리 맡아두기 금지"],
+      "accessibility": { "elevator": true },
+      "photos": [],
+      "lastVerified": "2026-11-18",
+      "source": "field"
+    },
+    {
+      "id": "eng1-1f-wc",
+      "name": "1층 화장실",
+      "category": "restroom",
+      "subcategory": null,
+      "buildingId": "eng1",
+      "floor": "1F",
+      "locationHint": "(예시) 중앙 계단 뒤",
+      "hours": null,
+      "features": [],
+      "manners": [],
+      "accessibility": { "accessibleRestroom": false },
+      "photos": [],
+      "lastVerified": "2026-11-18",
+      "source": "field"
+    },
+    {
+      "id": "eng1-2f-vending",
+      "name": "2층 자판기",
+      "category": "amenity",
+      "subcategory": "vending",
+      "buildingId": "eng1",
+      "floor": "2F",
+      "locationHint": "(예시) 복도 중앙 라운지 옆",
+      "hours": null,
+      "features": ["(예시) 음료·과자"],
+      "manners": [],
+      "accessibility": {},
+      "photos": [],
+      "lastVerified": "2026-11-18",
+      "source": "field"
+    }
+  ]
+}

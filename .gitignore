@@ -1,0 +1,25 @@
+# 의존성·빌드 결과
+node_modules/
+dist/
+dist-ssr/
+*.tsbuildinfo
+
+# 환경변수·비밀 키 (절대 커밋 금지)
+.env*
+!.env.example
+.dev.vars
+.dev.vars.*
+*.local
+
+# Cloudflare
+.wrangler/
+
+# 로그·OS·에디터
+logs/
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/

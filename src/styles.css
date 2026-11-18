@@ -1,0 +1,614 @@
+/* 모바일 360px 우선. 터치 영역 최소 44px (PRD 6장 접근성) */
+
+:root {
+  --c-bg: #f5f6f8;
+  --c-surface: #ffffff;
+  --c-text: #1d2330;
+  --c-muted: #5b6475;
+  --c-border: #dde1e7;
+  --c-accent: #1b4f9c;
+  --c-accent-weak: #e6eefb;
+  --c-warn-bg: #fff4d6;
+  --c-warn-text: #6b4e00;
+  --c-badge: #c62f2f;
+  --c-map-bg: #e4e8d9;
+  --c-map-grid: #cfd5c2;
+  --c-building: #9aa1ab;
+
+  --radius: 12px;
+  --tap: 44px;
+
+  font-family: system-ui, -apple-system, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  line-height: 1.45;
+  color: var(--c-text);
+  background: var(--c-bg);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overscroll-behavior: none;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+}
+
+/* ── 레이아웃 ─────────────────────────────── */
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+}
+
+.topbar {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: calc(8px + env(safe-area-inset-top)) 12px 8px;
+  background: var(--c-surface);
+  border-bottom: 1px solid var(--c-border);
+}
+
+.map-area {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+
+.app-loading,
+.app-error {
+  padding: 24px 16px;
+}
+
+.app-error pre {
+  white-space: pre-wrap;
+  font-size: 12px;
+  background: var(--c-surface);
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--c-border);
+}
+
+.dummy-banner {
+  margin: 0;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--c-warn-bg);
+  color: var(--c-warn-text);
+  font-size: 12px;
+}
+
+/* ── 검색 ─────────────────────────────────── */
+
+.search {
+  position: relative;
+}
+
+.search input {
+  width: 100%;
+  height: var(--tap);
+  padding: 0 16px;
+  border: 1px solid var(--c-border);
+  border-radius: 999px;
+  background: var(--c-bg);
+  font-size: 16px; /* 16px 미만이면 iOS가 입력 시 화면을 확대함 */
+}
+
+.search input:focus {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 1px;
+  background: var(--c-surface);
+}
+
+.search-results {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  max-height: 60dvh;
+  overflow-y: auto;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.12);
+}
+
+.search-results button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  min-height: var(--tap);
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.search-results button:hover,
+.search-results button:focus-visible {
+  background: var(--c-accent-weak);
+}
+
+.search-results small {
+  color: var(--c-muted);
+}
+
+.search-empty {
+  padding: 12px;
+  color: var(--c-muted);
+}
+
+/* ── 필터 칩 ──────────────────────────────── */
+
+.filter-bar {
+  display: flex;
+  gap: 6px;
+  margin: 0 -12px;
+  padding: 0 12px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.filter-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: var(--tap);
+  padding: 0 14px;
+  border: 1px solid var(--c-border);
+  border-radius: 999px;
+  background: var(--c-surface);
+  font-size: 14px;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.chip[aria-pressed='true'] {
+  background: var(--c-accent);
+  border-color: var(--c-accent);
+  color: #fff;
+}
+
+.chip__count {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+/* ── 지도 ─────────────────────────────────── */
+
+.map-viewport {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  touch-action: none; /* 브라우저 기본 핀치·스크롤 대신 직접 처리 */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  background: var(--c-map-bg);
+  cursor: grab;
+}
+
+.map-viewport:active {
+  cursor: grabbing;
+}
+
+.map-content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+.map-base {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* 바탕 이미지(base.webp)가 없을 때 */
+.map-base--placeholder {
+  background-color: var(--c-map-bg);
+  background-image:
+    linear-gradient(var(--c-map-grid) 4px, transparent 4px),
+    linear-gradient(90deg, var(--c-map-grid) 4px, transparent 4px);
+  background-size: 250px 250px;
+}
+
+.building {
+  position: absolute;
+  pointer-events: none;
+  transition:
+    transform 0.18s ease-out,
+    filter 0.18s ease-out,
+    opacity 0.18s ease-out;
+}
+
+.building--image {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* 건물 이미지가 없을 때의 회색 사각형 */
+.building--placeholder {
+  background: var(--c-building);
+  border: 6px solid rgb(0 0 0 / 0.1);
+  border-radius: 24px;
+}
+
+/* 선택 강조: 흰 테두리 + 강조색 외곽선. --map-scale로 나눠 화면에서 두께가 일정하게 */
+.building.is-selected {
+  z-index: 1;
+  transform: scale(1.04);
+  filter: drop-shadow(0 0 calc(2px / var(--map-scale)) #fff)
+    drop-shadow(0 0 calc(2px / var(--map-scale)) #fff)
+    drop-shadow(0 0 calc(5px / var(--map-scale)) var(--c-accent));
+}
+
+.building.is-dimmed {
+  opacity: 0.35;
+}
+
+.map-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.map-label {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--tap);
+  padding: 0 2px;
+  border: 0;
+  background: none;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.map-label__text {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 0.94);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.2);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.map-label.is-selected .map-label__text {
+  background: var(--c-accent);
+  color: #fff;
+}
+
+.badge {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--c-badge);
+  color: #fff;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: center;
+}
+
+.map-status,
+.map-toast {
+  position: absolute;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgb(29 35 48 / 0.85);
+  color: #fff;
+  font-size: 13px;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ── 건물 시트 ────────────────────────────── */
+
+.sheet {
+  position: fixed;
+  z-index: 30;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  max-width: 640px;
+  max-height: 62dvh;
+  margin: 0 auto;
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--c-surface);
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -6px 24px rgb(0 0 0 / 0.15);
+}
+
+.sheet__header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 6px 6px 16px;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.sheet__header .icon-btn:first-child {
+  margin-left: -10px;
+}
+
+.sheet__header h2 {
+  flex: 1;
+  margin: 0;
+  font-size: 18px;
+}
+
+.sheet__body {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 12px 16px 16px;
+}
+
+.icon-btn {
+  flex: none;
+  width: var(--tap);
+  height: var(--tap);
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.sheet__aliases {
+  margin: 0 0 8px;
+  color: var(--c-muted);
+  font-size: 13px;
+}
+
+.sheet__filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding: 0 4px 0 12px;
+  border-radius: 8px;
+  background: var(--c-accent-weak);
+  font-size: 13px;
+}
+
+.link-btn {
+  min-height: var(--tap);
+  padding: 0 8px;
+  border: 0;
+  background: none;
+  color: var(--c-accent);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.floor-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  overflow-x: auto;
+}
+
+.floor-tab {
+  flex: none;
+  min-width: var(--tap);
+  min-height: var(--tap);
+  padding: 0 12px;
+  border: 1px solid var(--c-border);
+  border-radius: 10px;
+  background: var(--c-surface);
+  cursor: pointer;
+}
+
+.floor-tab[aria-selected='true'] {
+  background: var(--c-text);
+  border-color: var(--c-text);
+  color: #fff;
+}
+
+.floor-group {
+  margin-top: 12px;
+}
+
+.floor-group h3 {
+  margin: 0 0 2px;
+  font-size: 15px;
+}
+
+.floor-summary {
+  margin: 0 0 6px;
+  color: var(--c-muted);
+  font-size: 13px;
+}
+
+.place-list,
+.entrance-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.entrance-list {
+  font-size: 14px;
+}
+
+.place-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-height: var(--tap);
+  padding: 8px 12px;
+  border: 1px solid var(--c-border);
+  border-radius: 10px;
+  background: var(--c-surface);
+  text-align: left;
+  cursor: pointer;
+}
+
+.place-item small {
+  color: var(--c-muted);
+  white-space: nowrap;
+}
+
+.empty {
+  color: var(--c-muted);
+  font-size: 14px;
+}
+
+.sheet__meta {
+  margin: 16px 0 0;
+  color: var(--c-muted);
+  font-size: 12px;
+}
+
+/* ── 장소 카드 ────────────────────────────── */
+
+.place-card__kind {
+  margin: 0;
+  color: var(--c-accent);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.place-card h3 {
+  margin: 2px 0 4px;
+  font-size: 18px;
+}
+
+.place-card__where {
+  margin: 0 0 8px;
+  color: var(--c-muted);
+  font-size: 14px;
+}
+
+.place-card__hint {
+  margin: 0 0 12px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: var(--c-bg);
+  font-size: 14px;
+}
+
+.place-card dl {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 8px 10px;
+  margin: 0;
+  font-size: 14px;
+}
+
+.place-card dt {
+  color: var(--c-muted);
+}
+
+.place-card dd {
+  margin: 0;
+}
+
+.place-card dd ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.place-card__photos {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  overflow-x: auto;
+}
+
+.place-card__photos img {
+  flex: none;
+  width: 160px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: var(--c-bg);
+}
+
+.place-card__meta {
+  margin: 12px 0 8px;
+  color: var(--c-muted);
+  font-size: 12px;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: var(--tap);
+  border: 1px solid var(--c-border);
+  border-radius: 10px;
+  background: var(--c-surface);
+  color: var(--c-text);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
